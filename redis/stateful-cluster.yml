@@ -35,6 +35,7 @@ spec:
       - name: script
         configMap:
           name: redis-config
+          defaultMode: 0777
       - name: passwd-volume
         secret:
           secretName: redis-passwd
