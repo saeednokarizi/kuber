@@ -28,7 +28,7 @@ spec:
           volumeMounts:
           - name: passwd-volume
             readOnly: true
-            mountPath: "/etc/redis-paswd"
+            mountPath: "/etc/redis-passwd"
           resources:
             requests:
               cpu: "1.0"
