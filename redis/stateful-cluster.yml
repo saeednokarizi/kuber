@@ -23,7 +23,7 @@ spec:
         - name: data
           mountPath: /data
         - name: script
-          mountPath: /script/launch.sh
+          mountPath: /script
           subPath: launch.sh
         - name: passwd-volume
           mountPath: /etc/redis-passwd
@@ -35,7 +35,6 @@ spec:
       - name: script
         configMap:
           name: redis-config
-          defaultMode: 0777
       - name: passwd-volume
         secret:
           secretName: redis-passwd
