@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  lables:
+  labels:
     app: frontend
   name: frontend
   namespace: default
@@ -17,20 +17,20 @@ spec:
     spec:
       containers:
         - name: frontend
-          images: my-repo/journal-server:v1-abcde
+          image: my-repo/journal-server:v1-abcde
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: passwd-volume
             readOnly: true
             mountPath: "/etc/redis-paswd"
-          resource:
+          resources:
             requests:
               cpu: "1.0"
               memory: "1G"
             limits:
               cpu: "1.0"
               memory: "1G"
-      volume:
+      volumes:
       - name: passwd-volume
         secret: 
           secretName: redis-passwd
