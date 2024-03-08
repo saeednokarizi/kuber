@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
+  lables:
     app: frontend
   name: frontend
   namespace: default
