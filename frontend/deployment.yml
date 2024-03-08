@@ -17,22 +17,20 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: mmadsen340/journal-server:latest
+          image: brendanburns/journal-server:latest
           imagePullPolicy: IfNotPresent
-          volumeMounts:
-          - name: passwd-volume
-            readOnly: true
-            mountPath: "/etc/redis-paswd"
-          resources:
-            requests:
-              cpu: "1.0"
-              memory: "1G"
-            limits:
-              cpu: "1.0"
-              memory: "1G"
-      volumes:
-      - name: passwd-volume
-        secret: 
-          secretName: redis-passwd
-
-
+#          volumeMounts:
+#          - name: passwd-volume
+#            readOnly: true
+#            mountPath: "/etc/redis-paswd"
+#          resources:
+#            requests:
+#              cpu: "1.0"
+#              memory: "1G"
+#            limits:
+#              cpu: "1.0"
+#              memory: "1G"
+#      volumes:
+#      - name: passwd-volume
+#        secret: 
+#          secretName: redis-passwd
