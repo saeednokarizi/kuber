@@ -7,7 +7,7 @@ spec:
   - http:
       paths:
       - path: /testpath
-        pathType: prefix
+        pathType: Prefix
         backend:
           service:
             name: test
