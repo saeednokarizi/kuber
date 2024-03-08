@@ -18,7 +18,7 @@ spec:
       containers:
       # This image is intended as an example, replace it with your own
       # static files image.
-      - image: my-repo/static-files:v1-abcde
+      - image: ubirch/static-files-prod
         imagePullPolicy: Always
         name: fileserver
         terminationMessagePath: /dev/termination-log
