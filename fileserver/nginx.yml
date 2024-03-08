@@ -18,7 +18,7 @@ spec:
       containers:
       # This image is intended as an example, replace it with your own
       # static files image.
-      - image: saeednokarizi/pyapp:latest
+      - image: saeednokarizi/assignment-1:latest
         imagePullPolicy: Always
         name: fileserver
         terminationMessagePath: /dev/termination-log

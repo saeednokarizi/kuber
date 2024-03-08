@@ -7,9 +7,9 @@ metadata:
   namespace: default
 spec:
   ports:
-  - port: 80
+  - port: 5000
     protocol: TCP
-    targetPort: 80
+    targetPort: 5000
   selector:
     app: fileserver
   sessionAffinity: None
