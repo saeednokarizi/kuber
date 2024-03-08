@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: my-repo/journal-server:v1-abcde
+          image: brendanburns/journal-server:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: passwd-volume
