@@ -13,7 +13,6 @@ spec:
             name: fileserver
             port:
               number: 8080
-          # NOTE: this should come after /api or else it will hijack requests
       - path: /
         pathType: Prefix
         backend:
