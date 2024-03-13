@@ -23,7 +23,7 @@ spec:
           - name: JOURNAL_ENTRIES
             valueFrom:
               configMapKeyRef:
-                name: frontend-config
+                name: frontend-config-v1
                 key: journalEntries
           volumeMounts:
           - name: passwd-volume
