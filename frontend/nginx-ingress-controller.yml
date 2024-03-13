@@ -1,0 +1,200 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 639913a3d9ad95a64c42c9fa090e463187c04f994245f781759ba4c695ce3c19
+    cni.projectcalico.org/podIP: 10.1.224.146/32
+    cni.projectcalico.org/podIPs: 10.1.224.146/32
+  creationTimestamp: "2024-03-07T17:59:56Z"
+  generateName: nginx-ingress-microk8s-controller-
+  labels:
+    controller-revision-hash: 5ccc44445c
+    name: nginx-ingress-microk8s
+    pod-template-generation: "1"
+  name: nginx-ingress-microk8s-controller-488vv
+  namespace: ingress
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: DaemonSet
+    name: nginx-ingress-microk8s-controller
+    uid: eff9127f-2855-4a7d-8864-a3e3587fb52f
+  resourceVersion: "146842"
+  uid: 2e25f731-0438-4bb2-8fc8-7bb380c9f330
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchFields:
+          - key: metadata.name
+            operator: In
+            values:
+            - backtrack
+  containers:
+  - args:
+    - /nginx-ingress-controller
+    - --configmap=$(POD_NAMESPACE)/nginx-load-balancer-microk8s-conf
+    - --tcp-services-configmap=$(POD_NAMESPACE)/nginx-ingress-tcp-microk8s-conf
+    - --udp-services-configmap=$(POD_NAMESPACE)/nginx-ingress-udp-microk8s-conf
+    - --ingress-class=public
+    - ' '
+    - --publish-status-address=127.0.0.1
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    image: registry.k8s.io/ingress-nginx/controller:v1.8.0
+    imagePullPolicy: IfNotPresent
+    lifecycle:
+      preStop:
+        exec:
+          command:
+          - /wait-shutdown
+    livenessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /healthz
+        port: 10254
+        scheme: HTTP
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 5
+    name: nginx-ingress-microk8s
+    ports:
+    - containerPort: 80
+      hostPort: 80
+      name: http
+      protocol: TCP
+    - containerPort: 443
+      hostPort: 443
+      name: https
+      protocol: TCP
+    - containerPort: 10254
+      hostPort: 10254
+      name: health
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /healthz
+        port: 10254
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 5
+    resources: {}
+    securityContext:
+      capabilities:
+        add:
+        - NET_BIND_SERVICE
+        drop:
+        - ALL
+      runAsUser: 101
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-phrs5
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: backtrack
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: nginx-ingress-microk8s-serviceaccount
+  serviceAccountName: nginx-ingress-microk8s-serviceaccount
+  terminationGracePeriodSeconds: 60
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/disk-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/pid-pressure
+    operator: Exists
+  - effect: NoSchedule
+    key: node.kubernetes.io/unschedulable
+    operator: Exists
+  volumes:
+  - name: kube-api-access-phrs5
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2024-03-07T17:59:57Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2024-03-09T12:08:49Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2024-03-09T12:08:49Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2024-03-07T17:59:56Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://b820308a0b602de688eb863ee0c07a96687cde72f800694e9e6b6dc057cae509
+    image: registry.k8s.io/ingress-nginx/controller:v1.8.0
+    imageID: registry.k8s.io/ingress-nginx/controller@sha256:744ae2afd433a395eeb13dc03d3313facba92e96ad71d9feaafc85925493fee3
+    lastState:
+      terminated:
+        containerID: containerd://d393ba716a42959c5297286e286fa30d9c41988f2a03e5e1e6571c1c0d5457b4
+        exitCode: 143
+        finishedAt: "2024-03-09T12:08:24Z"
+        reason: Error
+        startedAt: "2024-03-09T12:07:44Z"
+    name: nginx-ingress-microk8s
+    ready: true
+    restartCount: 37
+    started: true
+    state:
+      running:
+        startedAt: "2024-03-09T12:08:29Z"
+  hostIP: 192.168.88.161
+  phase: Running
+  podIP: 10.1.224.146
+  podIPs:
+  - ip: 10.1.224.146
+  qosClass: BestEffort
+  startTime: "2024-03-07T17:59:57Z"
